@@ -1,0 +1,38 @@
+<head>
+  <title>tabular-memory-leak</title>
+</head>
+
+<body>
+  <h1>Welcome to Meteor!</h1>
+
+  {{> layout}}
+</body>
+
+
+
+<template name="layout">
+  <div class="row">
+    <div class="col-sm-3">
+      <a href="{{pathFor 'hello'}}">Hello</a>
+    </div>
+    <div class="col-sm-3">
+        <a href="{{pathFor 'goodbye'}}">Goodbye</a>
+    </div>
+    <div class="col-sm-3">
+      <a href="#" id="destroy">Destroy</a>
+    </div>
+    <div class="col-sm-3">
+      <a href="#" id="dont-destroy">Don't Destroy</a>
+    </div>
+  </div>
+  <hr>
+  {{> yield}}
+</template>
+
+<template name="hello">
+    {{> tabular table=TabularTables.Books class="table table-striped table-bordered table-condensed"}}
+</template>
+
+<template name="goodbye">
+  Goodbye!
+</template>
