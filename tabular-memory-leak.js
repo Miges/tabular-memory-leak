@@ -52,6 +52,22 @@ Router.onStop(function() {
 
 
 if (Meteor.isClient) {
+  var timer = function(){
+    Meteor.setTimeout(function(){
+      if (hello) {
+        Router.go('goodbye');
+      } else {
+        Router.go('hello');
+      }
+      hello = !hello;
+      var timerGo = Session.get('timer');
+      if (timerGo) {
+        timer();
+      }
+    }, 300);
+  }
+
+  
   Template.layout.events({
     'click #destroy': function(){
       Session.set('destroy', true);
@@ -59,18 +75,19 @@ if (Meteor.isClient) {
     'click #dont-destroy': function(){
       Session.set('destroy', false);
     },
+    'click #start': function(){
+      Session.set('timer', true);
+      timer();
+    },
+    'click #stop': function(){
+      Session.set('timer', false);
+    },
   });
 
   var hello = true;
-  Meteor.setInterval(function(){
-    if (hello) {
-      Router.go('goodbye');
-    } else {
-      Router.go('hello');
-    }
-    hello = !hello;
-  }, 300);
+  timer();
 }
+
 
 
 if (Meteor.isServer) {
